@@ -3,6 +3,7 @@ package com.bulbul.ribana.service.implementation;
 import com.bulbul.ribana.repository.BaseRepository;
 import com.bulbul.ribana.service.BaseService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -24,6 +25,11 @@ public abstract class BaseServiceImpl<T, ID> implements BaseService<T, ID> {
     @Override
     public List<T> findAll(Sort sort) {
         return baseRepository.findAll(sort);
+    }
+
+    @Override
+    public List<T> findAll(Pageable pageable) {
+        return baseRepository.findAll(pageable).getContent();
     }
 
     @Override

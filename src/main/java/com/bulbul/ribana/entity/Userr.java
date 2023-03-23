@@ -1,13 +1,17 @@
 package com.bulbul.ribana.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.bulbul.ribana.CustomUserr;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+@SqlResultSetMapping(
+        name = "CustomUserrMapping",
+        classes = @ConstructorResult(
+                targetClass = CustomUserr.class,
+                columns = {
+                        @ColumnResult(name = "name", type = String.class)}))
 @Data
 @Entity
 public class Userr {

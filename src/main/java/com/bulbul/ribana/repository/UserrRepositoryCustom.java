@@ -1,12 +1,11 @@
-package com.bulbul.ribana.service;
+package com.bulbul.ribana.repository;
 
 import com.bulbul.ribana.CustomUserr;
-import com.bulbul.ribana.entity.Userr;
 
 import java.util.List;
 import java.util.Map;
 
-public interface UserrService extends BaseService<Userr, Long> {
+public interface UserrRepositoryCustom {
 
     List<CustomUserr> findByParams(Map<String, Object> params);
 

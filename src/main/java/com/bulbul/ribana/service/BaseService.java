@@ -1,6 +1,7 @@
 package com.bulbul.ribana.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,9 @@ public interface BaseService<T, ID> {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     List<T> findAll(Sort sort);
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    List<T> findAll(Pageable pageable);
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     T findById(ID id) throws NoSuchElementException;
