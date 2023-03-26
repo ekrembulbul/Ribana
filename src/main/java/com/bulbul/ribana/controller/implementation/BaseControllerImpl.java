@@ -27,11 +27,10 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     public ResponseEntity<List<T>> findAll(String direction, String... properties) {
         final Sort.Direction sortDirection = ControllerSortUtil.getSortDirection(direction);
 
-        if (Objects.isNull(sortDirection)) {
+        if (Objects.isNull(sortDirection))
             return ResponseEntity.badRequest().build();
-        } else {
+        else
             return ResponseEntity.ok(baseService.findAll(Sort.by(sortDirection, properties)));
-        }
     }
 
     @Override
@@ -43,11 +42,10 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     public ResponseEntity<List<T>> findAll(Integer page, Integer size, String direction, String... properties) {
         final Sort.Direction sortDirection = ControllerSortUtil.getSortDirection(direction);
 
-        if (Objects.isNull(sortDirection)) {
+        if (Objects.isNull(sortDirection))
             return ResponseEntity.badRequest().build();
-        } else {
+        else
             return ResponseEntity.ok(baseService.findAll(PageRequest.of(page, size, Sort.by(sortDirection, properties))));
-        }
     }
 
     @Override

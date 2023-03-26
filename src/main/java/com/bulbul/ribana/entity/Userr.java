@@ -1,6 +1,6 @@
 package com.bulbul.ribana.entity;
 
-import com.bulbul.ribana.CustomUserr;
+import com.bulbul.ribana.entity.custom.CustomUserr;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,18 +16,18 @@ import lombok.Data;
 @Entity
 public class Userr {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
-        @Size(max = 64)
-        @NotBlank
-        private String userName;
+    @Size(max = 64)
+    @NotBlank
+    private String userName;
 
-        @Size(max = 64)
-        private String name;
+    @Size(max = 64)
+    private String name;
 
-        @Size(max = 64)
-        private String surname;
+    @Size(max = 64)
+    private String surname;
 
 }

@@ -1,11 +1,12 @@
 package com.bulbul.ribana.service.implementation;
 
-import com.bulbul.ribana.CustomUserr;
 import com.bulbul.ribana.entity.Userr;
+import com.bulbul.ribana.entity.custom.CustomUserr;
 import com.bulbul.ribana.repository.UserrRepository;
 import com.bulbul.ribana.service.UserrService;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class UserrServiceImpl extends BaseServiceImpl<Userr, Long> implements Us
     }
 
     @Override
-    public List<CustomUserr> findByParams(Map<String, Object> params) {
+    public List<CustomUserr> findByParams(Map<String, Object> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         return userrRepository.findByParams(params);
     }
 

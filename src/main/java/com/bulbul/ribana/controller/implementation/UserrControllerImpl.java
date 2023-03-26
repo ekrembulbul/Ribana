@@ -1,12 +1,13 @@
 package com.bulbul.ribana.controller.implementation;
 
-import com.bulbul.ribana.CustomUserr;
 import com.bulbul.ribana.controller.UserrController;
 import com.bulbul.ribana.entity.Userr;
+import com.bulbul.ribana.entity.custom.CustomUserr;
 import com.bulbul.ribana.service.UserrService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class UserrControllerImpl extends BaseControllerImpl<Userr, Long> impleme
     }
 
     @Override
-    public ResponseEntity<List<CustomUserr>> findByParams(Map<String, Object> params) {
+    public ResponseEntity<List<CustomUserr>> findByParams(Map<String, Object> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         return ResponseEntity.ok(userService.findByParams(params));
     }
 

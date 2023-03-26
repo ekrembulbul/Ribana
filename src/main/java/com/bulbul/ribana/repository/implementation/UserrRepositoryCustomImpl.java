@@ -1,12 +1,13 @@
 package com.bulbul.ribana.repository.implementation;
 
-import com.bulbul.ribana.CustomUserr;
+import com.bulbul.ribana.entity.custom.CustomUserr;
 import com.bulbul.ribana.repository.UserrRepositoryCustom;
+import com.bulbul.ribana.util.DatabaseUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,13 +18,19 @@ public class UserrRepositoryCustomImpl implements UserrRepositoryCustom {
     EntityManager entityManager;
 
     @Override
-    public List<CustomUserr> findByParams(Map<String, Object> params) {
-        System.out.println(Arrays.toString(params.entrySet().toArray()));
+    public List<CustomUserr> findByParams(Map<String, Object> params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+        String queryStr = """
+                SELECT
+                    U.ID,
+                    U.USER_NAME,
+                    U.NAME,
+                    U.SURNAME
+                FROM USERR U
+                WHERE 1=1
+                """;
 
-        final List<CustomUserr> result = entityManager.createNativeQuery("select u.name as name from userr u where 1=1 and u.name = 'ekrem'", "CustomUserrMapping").getResultList();
-
-        return result;
+        return DatabaseUtil.getQueryResult(entityManager, CustomUserr.class, params, queryStr);
     }
 
-
 }
+

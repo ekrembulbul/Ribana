@@ -7,13 +7,12 @@ import java.util.Objects;
 public class ControllerSortUtil {
 
     public static Sort.Direction getSortDirection(String direction) {
-        if (Objects.isNull(direction) || direction.isEmpty() || "asc".equals(direction)) {
+        if (Objects.isNull(direction) || direction.isEmpty() || "asc".equals(direction))
             return Sort.Direction.ASC;
-        } else if ("desc".equals(direction)) {
+        else if ("desc".equals(direction))
             return Sort.Direction.DESC;
-        } else {
+        else
             return null;
-        }
     }
 
 }
