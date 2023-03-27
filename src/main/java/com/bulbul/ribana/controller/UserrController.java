@@ -15,6 +15,6 @@ import java.util.Map;
 public interface UserrController extends BaseController<Userr, Long> {
 
     @GetMapping("/findByParams")
-    ResponseEntity<List<CustomUserr>> findByParams(@RequestParam Map<String, Object> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException;
+    ResponseEntity<List<CustomUserr>> findByParams(@RequestParam Map<String, String> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException;
 
 }

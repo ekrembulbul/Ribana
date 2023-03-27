@@ -5,7 +5,7 @@ public class CommonConstants {
     public static final String BLANK = "";
 
     public static final String SPACE = " ";
-    
+
     public static final String SET = "set";
 
     public static final String DB_LIKE = " LIKE ";

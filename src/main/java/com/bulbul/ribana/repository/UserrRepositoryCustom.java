@@ -8,6 +8,6 @@ import java.util.Map;
 
 public interface UserrRepositoryCustom {
 
-    List<CustomUserr> findByParams(Map<String, Object> params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException;
+    List<CustomUserr> findByParams(Map<String, String> params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException;
 
 }

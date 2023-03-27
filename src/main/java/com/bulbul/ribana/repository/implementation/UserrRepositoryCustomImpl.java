@@ -18,7 +18,7 @@ public class UserrRepositoryCustomImpl implements UserrRepositoryCustom {
     EntityManager entityManager;
 
     @Override
-    public List<CustomUserr> findByParams(Map<String, Object> params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+    public List<CustomUserr> findByParams(Map<String, String> params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         String queryStr = """
                 SELECT
                     U.ID,
