@@ -20,8 +20,18 @@ public class CommonConstants {
 
     public static final String DB_OR = " OR ";
 
+    public static final String DB_CONDITION = "condition";
+
+    public static final String DB_AND_PREFIX = " 1=1";
+
+    public static final String DB_OR_PREFIX = " 1<>1";
+
     public static final String WEB_BETWEEN_OPERATOR = ":";
 
     public static final String WEB_PARAM_SEPARATOR = ",";
+
+    public static final String WEB_AND = "and";
+
+    public static final String WEB_OR = "or";
 
 }
