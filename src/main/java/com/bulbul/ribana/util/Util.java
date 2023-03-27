@@ -2,8 +2,6 @@ package com.bulbul.ribana.util;
 
 import com.bulbul.ribana.constants.CommonConstants;
 
-import java.lang.reflect.Method;
-
 public class Util {
 
     public static String getSetMethodName(String fieldName) {

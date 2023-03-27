@@ -22,7 +22,7 @@ public class UserrControllerImpl extends BaseControllerImpl<Userr, Long> impleme
     }
 
     @Override
-    public ResponseEntity<List<CustomUserr>> findByParams(Map<String, Object> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+    public ResponseEntity<List<CustomUserr>> findByParams(Map<String, String> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         return ResponseEntity.ok(userService.findByParams(params));
     }
 

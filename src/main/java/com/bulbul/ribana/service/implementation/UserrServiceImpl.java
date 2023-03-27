@@ -21,7 +21,7 @@ public class UserrServiceImpl extends BaseServiceImpl<Userr, Long> implements Us
     }
 
     @Override
-    public List<CustomUserr> findByParams(Map<String, Object> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+    public List<CustomUserr> findByParams(Map<String, String> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         return userrRepository.findByParams(params);
     }
 

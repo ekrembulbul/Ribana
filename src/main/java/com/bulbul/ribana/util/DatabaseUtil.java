@@ -17,7 +17,7 @@ public class DatabaseUtil {
     static Logger logger = LogManager.getLogger(DatabaseUtil.class);
 
     @NotNull
-    public static <T> List<T> getQueryResult(final EntityManager entityManager, final Class<T> clazz, final Map<String, Object> params, final String queryStr) throws NoSuchFieldException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    public static <T> List<T> getQueryResult(final EntityManager entityManager, final Class<T> clazz, final Map<String, String> params, final String queryStr) throws NoSuchFieldException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         final Map<String, String> dbParams = createDbParams(params);
 
         final String updatedQueryStr = updateQueryStrWithParams(clazz, params, dbParams, queryStr);
@@ -29,10 +29,10 @@ public class DatabaseUtil {
         return DatabaseUtil.setResults(clazz, resultList);
     }
 
-    private static Map<String, String> createDbParams(Map<String, Object> params) {
+    private static Map<String, String> createDbParams(Map<String, String> params) {
         Map<String, String> dbParams = new HashMap<>();
 
-        for (Map.Entry<String, Object> param : params.entrySet()) {
+        for (Map.Entry<String, String> param : params.entrySet()) {
             final String paramKeyDbFormat = DatabaseUtil.getParamKeyDbFormat(param.getKey());
             dbParams.put(param.getKey(), paramKeyDbFormat);
         }
@@ -41,10 +41,10 @@ public class DatabaseUtil {
     }
 
 
-    private static <T> String updateQueryStrWithParams(final Class<T> clazz, final Map<String, Object> params, final Map<String, String> dbParams, final String queryStr) throws NoSuchFieldException {
+    private static <T> String updateQueryStrWithParams(final Class<T> clazz, final Map<String, String> params, final Map<String, String> dbParams, final String queryStr) throws NoSuchFieldException {
         StringBuilder queryStrBuilder = new StringBuilder(queryStr);
 
-        for (Map.Entry<String, Object> param : params.entrySet()) {
+        for (Map.Entry<String, String> param : params.entrySet()) {
             if (Objects.isNull(param.getKey()) || Objects.isNull(param.getValue()))
                 continue;
 
