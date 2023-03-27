@@ -18,21 +18,41 @@ public class DatabaseUtil {
 
     @NotNull
     public static <T> List<T> getQueryResult(final EntityManager entityManager, final Class<T> clazz, final Map<String, String> params, final String queryStr) throws NoSuchFieldException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        final String condition = getCondition(params);
+
         final Map<String, String> dbParams = createDbParams(params);
 
-        final String updatedQueryStr = updateQueryStrWithParams(clazz, params, dbParams, queryStr);
+        final String updatedQueryStr = updateQueryStrWithParams(clazz, params, dbParams, queryStr, condition);
 
-//        logger.info("Custom Query: " + updatedQueryStr);
+        logger.info("Custom Query: " + updatedQueryStr);
 
         final List<?> resultList = entityManager.createNativeQuery(updatedQueryStr).getResultList();
 
         return DatabaseUtil.setResults(clazz, resultList);
     }
 
+    private static String getCondition(Map<String, String> params) {
+        String condition = CommonConstants.DB_AND;
+
+        if (params.containsKey(CommonConstants.DB_CONDITION)) {
+            String paramCondition = params.get(CommonConstants.DB_CONDITION);
+
+            if (CommonConstants.WEB_OR.equals(paramCondition))
+                condition = CommonConstants.DB_OR;
+
+            params.remove(CommonConstants.DB_CONDITION);
+        }
+
+        return condition;
+    }
+
     private static Map<String, String> createDbParams(Map<String, String> params) {
         Map<String, String> dbParams = new HashMap<>();
 
         for (Map.Entry<String, String> param : params.entrySet()) {
+            if (Objects.isNull(param.getKey()) || Objects.isNull(param.getValue()))
+                continue;
+
             final String paramKeyDbFormat = DatabaseUtil.getParamKeyDbFormat(param.getKey());
             dbParams.put(param.getKey(), paramKeyDbFormat);
         }
@@ -41,14 +61,19 @@ public class DatabaseUtil {
     }
 
 
-    private static <T> String updateQueryStrWithParams(final Class<T> clazz, final Map<String, String> params, final Map<String, String> dbParams, final String queryStr) throws NoSuchFieldException {
+    private static <T> String updateQueryStrWithParams(final Class<T> clazz, final Map<String, String> params, final Map<String, String> dbParams, final String queryStr, String condition) throws NoSuchFieldException {
         StringBuilder queryStrBuilder = new StringBuilder(queryStr);
+
+        if (CommonConstants.DB_AND.equals(condition))
+            queryStrBuilder.append(CommonConstants.DB_AND_PREFIX);
+        else if (CommonConstants.DB_OR.equals(condition))
+            queryStrBuilder.append(CommonConstants.DB_OR_PREFIX);
 
         for (Map.Entry<String, String> param : params.entrySet()) {
             if (Objects.isNull(param.getKey()) || Objects.isNull(param.getValue()))
                 continue;
 
-            queryStrBuilder.append(CommonConstants.DB_AND).append(dbParams.get(param.getKey()));
+            queryStrBuilder.append(condition).append(dbParams.get(param.getKey()));
 
             final Class<?> fieldType = clazz.getDeclaredField(param.getKey()).getType();
 
@@ -113,6 +138,9 @@ public class DatabaseUtil {
     }
 
     private static String getParamKeyDbFormat(String key) {
+        if (Objects.isNull(key))
+            return null;
+
         String[] splitStr = splitStrByUpperCase(key);
         StringBuilder upperStrBuilder = new StringBuilder();
 

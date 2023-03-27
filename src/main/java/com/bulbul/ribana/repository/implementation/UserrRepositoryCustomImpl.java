@@ -26,7 +26,7 @@ public class UserrRepositoryCustomImpl implements UserrRepositoryCustom {
                     U.NAME,
                     U.SURNAME
                 FROM USERR U
-                WHERE 1=1
+                WHERE
                 """;
 
         return DatabaseUtil.getQueryResult(entityManager, CustomUserr.class, params, queryStr);
