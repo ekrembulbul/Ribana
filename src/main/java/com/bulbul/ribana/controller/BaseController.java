@@ -10,13 +10,19 @@ public interface BaseController<T, ID> {
     ResponseEntity<List<T>> findAll();
 
     @GetMapping("/sort")
-    ResponseEntity<List<T>> findAll(@RequestParam(required = false) String direction, @RequestParam String... properties);
+    ResponseEntity<List<T>> findAll(@RequestParam(required = false) String direction, @RequestParam String[] properties);
+
+    @GetMapping("/order")
+    ResponseEntity<List<T>> findAll(@RequestParam String[] propertyAndDirection);
 
     @GetMapping("/page")
     ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size);
 
     @GetMapping("/pageAndSort")
-    ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) String direction, @RequestParam String... properties);
+    ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) String direction, @RequestParam String[] properties);
+
+    @GetMapping("/pageAndOrder")
+    ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam String[] propertyAndDirection);
 
     @GetMapping("/{id}")
     ResponseEntity<T> findById(@PathVariable ID id);
