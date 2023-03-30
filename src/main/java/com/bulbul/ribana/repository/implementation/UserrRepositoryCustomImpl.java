@@ -19,17 +19,17 @@ public class UserrRepositoryCustomImpl implements UserrRepositoryCustom {
 
     @Override
     public List<CustomUserr> findByParams(Map<String, String> params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException {
-        String queryStr = """
+        StringBuilder queryStrBuilder = new StringBuilder("""
                 SELECT
                     U.ID,
                     U.USER_NAME,
                     U.NAME,
                     U.SURNAME
                 FROM USERR U
-                WHERE
-                """;
+                WHERE 1=1
+                """);
 
-        return DatabaseUtil.getQueryResult(entityManager, CustomUserr.class, params, queryStr);
+        return DatabaseUtil.getQueryResultList(entityManager, CustomUserr.class, queryStrBuilder.toString());
     }
 
 }

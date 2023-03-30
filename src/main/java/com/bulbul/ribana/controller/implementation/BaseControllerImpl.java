@@ -2,7 +2,7 @@ package com.bulbul.ribana.controller.implementation;
 
 import com.bulbul.ribana.controller.BaseController;
 import com.bulbul.ribana.service.BaseService;
-import com.bulbul.ribana.util.ControllerSortUtil;
+import com.bulbul.ribana.util.ControllerUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,8 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     }
 
     @Override
-    public ResponseEntity<List<T>> findAll(String direction, String... properties) {
-        final Sort.Direction sortDirection = ControllerSortUtil.getSortDirection(direction);
+    public ResponseEntity<List<T>> findAll(String direction, String[] properties) {
+        final Sort.Direction sortDirection = ControllerUtil.getSortDirection(direction);
 
         if (Objects.isNull(sortDirection))
             return ResponseEntity.badRequest().build();
@@ -34,18 +34,38 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     }
 
     @Override
+    public ResponseEntity<List<T>> findAll(String[] propertyAndDirections) {
+        final Sort.Order[] orders = ControllerUtil.getOrders(propertyAndDirections);
+
+        if (Objects.isNull(orders))
+            return ResponseEntity.badRequest().build();
+        else
+            return ResponseEntity.ok(baseService.findAll(Sort.by(orders)));
+    }
+
+    @Override
     public ResponseEntity<List<T>> findAll(Integer page, Integer size) {
         return ResponseEntity.ok(baseService.findAll(PageRequest.of(page, size)));
     }
 
     @Override
-    public ResponseEntity<List<T>> findAll(Integer page, Integer size, String direction, String... properties) {
-        final Sort.Direction sortDirection = ControllerSortUtil.getSortDirection(direction);
+    public ResponseEntity<List<T>> findAll(Integer page, Integer size, String direction, String[] properties) {
+        final Sort.Direction sortDirection = ControllerUtil.getSortDirection(direction);
 
         if (Objects.isNull(sortDirection))
             return ResponseEntity.badRequest().build();
         else
             return ResponseEntity.ok(baseService.findAll(PageRequest.of(page, size, Sort.by(sortDirection, properties))));
+    }
+
+    @Override
+    public ResponseEntity<List<T>> findAll(Integer page, Integer size, String[] propertyAndDirections) {
+        final Sort.Order[] orders = ControllerUtil.getOrders(propertyAndDirections);
+
+        if (Objects.isNull(orders))
+            return ResponseEntity.badRequest().build();
+        else
+            return ResponseEntity.ok(baseService.findAll(PageRequest.of(page, size, Sort.by(orders))));
     }
 
     @Override
