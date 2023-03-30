@@ -20,11 +20,17 @@ public class CommonConstants {
 
     public static final String DB_OR = " OR ";
 
-    public static final String DB_CONDITION = "condition";
-
     public static final String DB_AND_PREFIX = " 1=1";
 
     public static final String DB_OR_PREFIX = " 1<>1";
+
+    public static final String DB_ASC = " ASC ";
+
+    public static final String DB_DESC = " DESC ";
+
+    public static final String WEB_CONDITION = "condition";
+
+    public static final String WEB_SORT = "sort";
 
     public static final String WEB_BETWEEN_OPERATOR = ":";
 
@@ -33,5 +39,11 @@ public class CommonConstants {
     public static final String WEB_AND = "and";
 
     public static final String WEB_OR = "or";
+
+    public static final String WEB_KEYWORD_OPERATOR = "@";
+
+    public static final String WEB_ASC = "asc";
+
+    public static final String WEB_DESC = "desc";
 
 }
