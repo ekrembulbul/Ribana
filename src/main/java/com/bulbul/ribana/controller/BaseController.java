@@ -53,4 +53,5 @@ public interface BaseController<T, ID> {
 
     @DeleteMapping("/all")
     ResponseEntity<T> deleteAll();
+
 }

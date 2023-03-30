@@ -42,4 +42,5 @@ public interface BaseService<T, ID> {
     void deleteAllByIdList(List<ID> idList);
 
     void deleteAll();
+
 }
