@@ -13,7 +13,7 @@ public interface BaseController<T, ID> {
     ResponseEntity<List<T>> findAll(@RequestParam(required = false) String direction, @RequestParam String[] properties);
 
     @GetMapping("/order")
-    ResponseEntity<List<T>> findAll(@RequestParam String[] propertyAndDirection);
+    ResponseEntity<List<T>> findAll(@RequestParam String[] propertiesAndDirections);
 
     @GetMapping("/page")
     ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size);
@@ -22,7 +22,7 @@ public interface BaseController<T, ID> {
     ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) String direction, @RequestParam String[] properties);
 
     @GetMapping("/pageAndOrder")
-    ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam String[] propertyAndDirection);
+    ResponseEntity<List<T>> findAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam String[] propertiesAndDirections);
 
     @GetMapping("/{id}")
     ResponseEntity<T> findById(@PathVariable ID id);

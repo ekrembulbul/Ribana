@@ -34,8 +34,8 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     }
 
     @Override
-    public ResponseEntity<List<T>> findAll(String[] propertyAndDirections) {
-        final Sort.Order[] orders = ControllerUtil.getOrders(propertyAndDirections);
+    public ResponseEntity<List<T>> findAll(String[] propertiesAndDirections) {
+        final Sort.Order[] orders = ControllerUtil.getOrders(propertiesAndDirections);
 
         if (Objects.isNull(orders))
             return ResponseEntity.badRequest().build();
@@ -59,8 +59,8 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     }
 
     @Override
-    public ResponseEntity<List<T>> findAll(Integer page, Integer size, String[] propertyAndDirections) {
-        final Sort.Order[] orders = ControllerUtil.getOrders(propertyAndDirections);
+    public ResponseEntity<List<T>> findAll(Integer page, Integer size, String[] propertiesAndDirections) {
+        final Sort.Order[] orders = ControllerUtil.getOrders(propertiesAndDirections);
 
         if (Objects.isNull(orders))
             return ResponseEntity.badRequest().build();
