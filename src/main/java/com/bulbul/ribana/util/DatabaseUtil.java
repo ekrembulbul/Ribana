@@ -1,6 +1,7 @@
 package com.bulbul.ribana.util;
 
 import com.bulbul.ribana.constants.CommonConstants;
+import com.bulbul.ribana.data.DbParamsData;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.constraints.NotNull;
 import org.apache.logging.log4j.LogManager;
@@ -18,11 +19,9 @@ public class DatabaseUtil {
 
     @NotNull
     public static <T> List<T> getQueryResult(final EntityManager entityManager, final Class<T> clazz, final Map<String, String> params, final String queryStr) throws NoSuchFieldException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
-        final String condition = getCondition(params);
+        final DbParamsData dbParamsData = createDbParamsData(params);
 
-        final Map<String, String> dbParams = createDbParams(params);
-
-        final String updatedQueryStr = updateQueryStrWithParams(clazz, params, dbParams, queryStr, condition);
+        final String updatedQueryStr = updateQueryStrWithParams(clazz, dbParamsData, queryStr);
 
         logger.info("Custom Query: " + updatedQueryStr);
 
@@ -31,19 +30,13 @@ public class DatabaseUtil {
         return DatabaseUtil.setResults(clazz, resultList);
     }
 
-    private static String getCondition(Map<String, String> params) {
-        String condition = CommonConstants.DB_AND;
+    private static DbParamsData createDbParamsData(Map<String, String> params) {
+        DbParamsData dbParamsData = new DbParamsData();
 
-        if (params.containsKey(CommonConstants.DB_CONDITION)) {
-            String paramCondition = params.get(CommonConstants.DB_CONDITION);
+        dbParamsData.setConditionDataFromParams(params);
+        dbParamsData.setSortDataFromParams(params);
 
-            if (CommonConstants.WEB_OR.equals(paramCondition))
-                condition = CommonConstants.DB_OR;
-
-            params.remove(CommonConstants.DB_CONDITION);
-        }
-
-        return condition;
+        return dbParamsData;
     }
 
     private static Map<String, String> createDbParams(Map<String, String> params) {
@@ -53,15 +46,28 @@ public class DatabaseUtil {
             if (Objects.isNull(param.getKey()) || Objects.isNull(param.getValue()))
                 continue;
 
-            final String paramKeyDbFormat = DatabaseUtil.getParamKeyDbFormat(param.getKey());
+            final String paramKeyDbFormat = DatabaseUtil.createParamKeyToDbFormatKey(param.getKey());
             dbParams.put(param.getKey(), paramKeyDbFormat);
         }
 
         return dbParams;
     }
 
+    private static String createParamKeyToDbFormatKey(String key) {
+        if (Objects.isNull(key))
+            return null;
 
-    private static <T> String updateQueryStrWithParams(final Class<T> clazz, final Map<String, String> params, final Map<String, String> dbParams, final String queryStr, String condition) throws NoSuchFieldException {
+        String[] splitStr = Util.splitStrByUpperCase(key);
+        StringBuilder upperStrBuilder = new StringBuilder();
+
+        for (String str : splitStr) {
+            upperStrBuilder.append(str.toUpperCase()).append(CommonConstants.DB_KEY_SEPARATOR);
+        }
+
+        return upperStrBuilder.substring(0, upperStrBuilder.lastIndexOf(CommonConstants.DB_KEY_SEPARATOR));
+    }
+
+    private static <T> String updateQueryStrWithParams(final Class<T> clazz, DbParamsData dbParamsData, final String queryStr) throws NoSuchFieldException {
         StringBuilder queryStrBuilder = new StringBuilder(queryStr);
 
         if (CommonConstants.DB_AND.equals(condition))
@@ -73,8 +79,29 @@ public class DatabaseUtil {
             if (Objects.isNull(param.getKey()) || Objects.isNull(param.getValue()))
                 continue;
 
-            queryStrBuilder.append(condition).append(dbParams.get(param.getKey()));
+            String[] splitValue = param.getValue().split(CommonConstants.WEB_PARAM_SEPARATOR);
+            for (String value : splitValue) {
+                Map.Entry<String, String> entry = new AbstractMap.SimpleEntry<>(param.getKey(), value);
+                createConditionWithParam(clazz, dbParams, condition, queryStrBuilder, entry);
+            }
+        }
 
+        return queryStrBuilder.toString();
+    }
+
+    private static <T> void createConditionWithParam(Class<T> clazz, Map<String, String> dbParams, String condition, StringBuilder queryStrBuilder, Map.Entry<String, String> param) throws NoSuchFieldException {
+        queryStrBuilder.append(condition).append(dbParams.get(param.getKey()));
+
+        boolean isThereBetween = param.getValue().contains(CommonConstants.WEB_BETWEEN_OPERATOR);
+
+        if (isThereBetween) {
+            String[] betweenSplitStr = param.getValue().split(CommonConstants.WEB_BETWEEN_OPERATOR);
+            if (betweenSplitStr.length != 2)
+                return;
+
+            queryStrBuilder.append(CommonConstants.DB_BETWEEN).append(betweenSplitStr[0]).append(CommonConstants.DB_AND).append(betweenSplitStr[1]);
+
+        } else {
             final Class<?> fieldType = clazz.getDeclaredField(param.getKey()).getType();
 
             if (String.class.equals(fieldType))
@@ -82,8 +109,6 @@ public class DatabaseUtil {
 
             queryStrBuilder.append(param.getValue());
         }
-
-        return queryStrBuilder.toString();
     }
 
     private static <T> List<T> setResults(final Class<T> clazz, final List<?> resultList) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
@@ -137,42 +162,4 @@ public class DatabaseUtil {
         method.invoke(instance, result);
     }
 
-    private static String getParamKeyDbFormat(String key) {
-        if (Objects.isNull(key))
-            return null;
-
-        String[] splitStr = splitStrByUpperCase(key);
-        StringBuilder upperStrBuilder = new StringBuilder();
-
-        for (String str : splitStr) {
-            upperStrBuilder.append(str.toUpperCase()).append(CommonConstants.DB_KEY_SEPARATOR);
-        }
-
-        return upperStrBuilder.substring(0, upperStrBuilder.lastIndexOf(CommonConstants.DB_KEY_SEPARATOR));
-    }
-
-    private static String[] splitStrByUpperCase(String key) {
-        List<String> splitStrList = new ArrayList<>();
-
-        int lastIndex = 0;
-
-        for (int i = 0; i <= key.length(); ++i) {
-            boolean isUpperCase = false;
-            boolean isStrEnd = false;
-
-            if (i == key.length()) {
-                isStrEnd = true;
-            } else {
-                final char letter = key.charAt(i);
-                isUpperCase = (int) letter >= 65 && (int) letter <= 90;
-            }
-
-            if (isUpperCase || isStrEnd) {
-                splitStrList.add(key.substring(lastIndex, i));
-                lastIndex = i;
-            }
-        }
-
-        return splitStrList.toArray(String[]::new);
-    }
 }
