@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.bulbul'
-version = '0.0.1-SNAPSHOT'
+version = 'v0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 configurations {
@@ -40,5 +40,5 @@ tasks.named('test') {
 }
 
 bootRun {
-    systemProperties = System.properties
+    systemProperties = System.properties as Map<String, ?>
 }
