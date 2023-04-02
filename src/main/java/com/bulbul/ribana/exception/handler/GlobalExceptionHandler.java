@@ -2,6 +2,7 @@ package com.bulbul.ribana.exception.handler;
 
 import com.bulbul.ribana.configuration.MessageProperties;
 import com.bulbul.ribana.exception.custom.ResultsAndFieldsNotEqualException;
+import com.bulbul.ribana.exception.custom.WrongPropertiesAndDirectionsException;
 import com.bulbul.ribana.exception.data.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,28 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Autowired
     MessageProperties messageProperties;
 
-    private final HttpStatus internalServerError = HttpStatus.INTERNAL_SERVER_ERROR;
-
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handleException(Exception ex, HttpServletRequest request) {
         ex.printStackTrace();
-        return new ResponseEntity<>(new ErrorResponse(), internalServerError);
+        return new ResponseEntity<>(new ErrorResponse(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = ResultsAndFieldsNotEqualException.class)
     public ResponseEntity<Object> handleResultsAndFieldsNotEqualException(ResultsAndFieldsNotEqualException exception, HttpServletRequest request) {
         exception.printStackTrace();
 
-        HttpStatus status = internalServerError;
-        ErrorResponse errorResponse = getErrorResponse(status,
-                                                       messageProperties.resultAndFieldNotEqualMessage,
-                                                       request.getRequestURI());
-        return new ResponseEntity<>(errorResponse, status);
+        ErrorResponse errorResponse = getInternalServerErrorResponse(messageProperties.resultLengthAndFieldLengthMustBeEqual,
+                                                                     request.getRequestURI());
+        return getInternalServerErrorResponseEntity(errorResponse);
+    }
+
+    @ExceptionHandler(value = WrongPropertiesAndDirectionsException.class)
+    public ResponseEntity<Object> handleWrongPropertiesAndDirectionsException(WrongPropertiesAndDirectionsException exception, HttpServletRequest request) {
+        exception.printStackTrace();
+
+        ErrorResponse errorResponse = getInternalServerErrorResponse(messageProperties.propertyAndDirectionParametersAreWrong,
+                                                                     request.getRequestURI());
+        return getInternalServerErrorResponseEntity(errorResponse);
     }
 
     private ErrorResponse getErrorResponse(HttpStatus status, String message, String path) {
@@ -44,6 +50,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .message(message)
                 .path(path)
                 .build();
+    }
+
+    private ErrorResponse getInternalServerErrorResponse(String message, String path) {
+        return getErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, message, path);
+    }
+
+    private ResponseEntity<Object> getInternalServerErrorResponseEntity(ErrorResponse errorResponse) {
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

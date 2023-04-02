@@ -9,6 +9,9 @@ import org.springframework.context.annotation.PropertySource;
 public class MessageProperties {
 
     @Value("${result.length.and.field.length.must.be.equal}")
-    public String resultAndFieldNotEqualMessage;
+    public String resultLengthAndFieldLengthMustBeEqual;
+
+    @Value("${property.and.direction.parameters.are.wrong}")
+    public String propertyAndDirectionParametersAreWrong;
 
 }

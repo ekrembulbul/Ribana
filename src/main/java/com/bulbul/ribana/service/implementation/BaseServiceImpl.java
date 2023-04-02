@@ -59,8 +59,10 @@ public abstract class BaseServiceImpl<T, ID> implements BaseService<T, ID> {
 
     @Override
     public T update(ID id, T entity) throws EntityNotFoundException {
-        if (baseRepository.existsById(id)) return baseRepository.save(entity);
-        else throw new EntityNotFoundException();
+        if (baseRepository.existsById(id))
+            return baseRepository.save(entity);
+        else
+            throw new EntityNotFoundException();
     }
 
     @Override
@@ -70,8 +72,10 @@ public abstract class BaseServiceImpl<T, ID> implements BaseService<T, ID> {
 
     @Override
     public void delete(ID id) throws EntityNotFoundException {
-        if (baseRepository.existsById(id)) baseRepository.deleteById(id);
-        else throw new EntityNotFoundException();
+        if (baseRepository.existsById(id))
+            baseRepository.deleteById(id);
+        else
+            throw new EntityNotFoundException();
     }
 
     @Override
