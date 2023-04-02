@@ -21,7 +21,6 @@ public class UserrRepositoryCustomImpl implements UserrRepositoryCustom {
     public List<CustomUserr> findByParams(Map<String, String> params) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         StringBuilder queryStrBuilder = new StringBuilder("""
                 SELECT
-                    U.ID,
                     U.USER_NAME,
                     U.NAME,
                     U.SURNAME

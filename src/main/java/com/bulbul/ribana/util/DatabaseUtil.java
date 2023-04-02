@@ -1,5 +1,6 @@
 package com.bulbul.ribana.util;
 
+import com.bulbul.ribana.exception.custom.ResultsAndFieldsNotEqualException;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.constraints.NotNull;
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +10,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class DatabaseUtil {
 
@@ -46,21 +50,18 @@ public class DatabaseUtil {
         T t = tConstructor.newInstance();
 
         if (result instanceof Object[] results) {
-//            if (results.length != fields.length)
-                // TODO: exception firlatilacak.
+            if (results.length != fields.length)
+                throw new ResultsAndFieldsNotEqualException();
 
             for (int i = 0; i < fields.length; ++i) {
-                if (results.length == i)
-                    break;
-
                 setField(t, fields[i], results[i]);
             }
 
         } else {
-//            if (fields.length == 1)
-                // TODO: exception firlatilacak.
+            if (fields.length == 1)
+                throw new ResultsAndFieldsNotEqualException();
 
-                setField(t, fields[0], result);
+            setField(t, fields[0], result);
         }
 
         return t;
