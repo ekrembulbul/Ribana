@@ -9,6 +9,6 @@ import java.util.Map;
 
 public interface UserrService extends BaseService<Userr, Long> {
 
-    List<CustomUserr> findByParams(Map<String, String> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException, NoSuchFieldException;
+    List<CustomUserr> findByParams(Map<String, String> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException;
 
 }
