@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:messages/error_messages.properties")
-public class ErrorMessageProperties {
+public class ErrorMessageConfiguration {
 
     @Value("${result.length.and.field.length.must.be.equal}")
     public String resultLengthAndFieldLengthMustBeEqual;

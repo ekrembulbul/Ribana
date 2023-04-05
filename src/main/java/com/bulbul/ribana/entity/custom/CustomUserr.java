@@ -5,12 +5,16 @@ import lombok.Data;
 @Data
 public class CustomUserr {
 
-    Long id;
+    private Long id;
 
-    String userName;
+    private String username;
 
-    String name;
+    private String password;
 
-    String surname;
+    private String name;
+
+    private String surname;
+
+    private Boolean active;
 
 }

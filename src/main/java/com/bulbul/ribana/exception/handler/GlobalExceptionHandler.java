@@ -1,6 +1,6 @@
 package com.bulbul.ribana.exception.handler;
 
-import com.bulbul.ribana.configuration.message.ErrorMessageProperties;
+import com.bulbul.ribana.configuration.message.ErrorMessageConfiguration;
 import com.bulbul.ribana.exception.custom.ResultsAndFieldsNotEqualException;
 import com.bulbul.ribana.exception.custom.WrongPropertiesAndDirectionsException;
 import com.bulbul.ribana.exception.data.ErrorResponse;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
-    ErrorMessageProperties messageProperties;
+    ErrorMessageConfiguration messageProperties;
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handleException(Exception exception, HttpServletRequest request) {

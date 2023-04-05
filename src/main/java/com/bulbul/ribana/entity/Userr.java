@@ -1,17 +1,14 @@
 package com.bulbul.ribana.entity;
 
-import com.bulbul.ribana.entity.custom.CustomUserr;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-@SqlResultSetMapping(
-        name = "CustomUserrMapping",
-        classes = @ConstructorResult(
-                targetClass = CustomUserr.class,
-                columns = {
-                        @ColumnResult(name = "name", type = String.class)}))
 @Data
 @Entity
 public class Userr {
@@ -22,12 +19,21 @@ public class Userr {
 
     @Size(max = 64)
     @NotBlank
-    private String userName;
+    private String username;
+
+    @Size(max = 60)
+    @NotBlank
+    private String password;
 
     @Size(max = 64)
+    @NotBlank
     private String name;
 
     @Size(max = 64)
+    @NotBlank
     private String surname;
+
+    @NotNull
+    private Boolean active;
 
 }
