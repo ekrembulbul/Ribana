@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/userr")
+@RequestMapping("/role")
 public interface RoleController extends BaseController<Role, Long> {
 
     @GetMapping("/findByParams")

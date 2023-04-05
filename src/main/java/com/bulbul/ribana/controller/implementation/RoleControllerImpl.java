@@ -14,16 +14,16 @@ import java.util.Map;
 @RestController
 public class RoleControllerImpl extends BaseControllerImpl<Role, Long> implements RoleController {
 
-    private final RoleService userService;
+    private final RoleService roleService;
 
     public RoleControllerImpl(RoleService roleService) {
         super(roleService);
-        this.userService = roleService;
+        this.roleService = roleService;
     }
 
     @Override
     public ResponseEntity<List<CustomRole>> findByParams(Map<String, String> params) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        return ResponseEntity.ok(userService.findByParams(params));
+        return ResponseEntity.ok(roleService.findByParams(params));
     }
 
 }
