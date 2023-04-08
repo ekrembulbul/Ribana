@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RibanaApplication {
 
-	static Logger logger = LogManager.getLogger(RibanaApplication.class);
+	static final Logger logger = LogManager.getLogger(RibanaApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(RibanaApplication.class, args);

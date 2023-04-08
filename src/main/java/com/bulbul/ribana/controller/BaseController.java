@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public interface BaseController<T, ID> {
     @GetMapping
     ResponseEntity<List<T>> findAll();

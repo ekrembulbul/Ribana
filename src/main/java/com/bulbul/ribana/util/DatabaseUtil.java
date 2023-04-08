@@ -17,8 +17,10 @@ import java.util.Objects;
 
 public class DatabaseUtil {
 
+    @SuppressWarnings("unused")
     private static final Logger logger = LogManager.getLogger(DatabaseUtil.class);
 
+    @SuppressWarnings("unused")
     @NotNull
     public static <T> List<T> getQueryResultList(final EntityManager entityManager, final Class<T> clazz, final String queryStr) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         final List<?> resultList = entityManager.createNativeQuery(queryStr).getResultList();

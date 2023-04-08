@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 @Configuration
 @PropertySource("classpath:settings/request_matchers.properties")
 public class RequestMatchersConfig {

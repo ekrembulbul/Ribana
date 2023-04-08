@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID> {
 
     private final BaseService<T, ID> baseService;

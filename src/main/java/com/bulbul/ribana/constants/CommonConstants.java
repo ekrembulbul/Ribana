@@ -8,6 +8,4 @@ public class CommonConstants {
 
     public static final String WEB_DESC = "desc";
 
-    public static final String WEB_SPLIT_OPERATOR = ",";
-
 }

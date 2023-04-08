@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.sql.DataSource;
 import java.util.EnumMap;
 
+@SuppressWarnings("unused")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

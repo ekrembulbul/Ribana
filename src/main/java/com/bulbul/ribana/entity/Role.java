@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+@SuppressWarnings("unused")
 @Data
 @Entity
 public class Role {

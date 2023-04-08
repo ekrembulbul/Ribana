@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@SuppressWarnings("unused")
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -20,7 +21,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     ErrorMessagesConfig messageProperties;
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Object> handleException(Exception exception, HttpServletRequest request) {
+    public ResponseEntity<Object> handleException(Exception exception) {
         exception.printStackTrace();
         return new ResponseEntity<>(new ErrorResponse(), HttpStatus.INTERNAL_SERVER_ERROR);
     }

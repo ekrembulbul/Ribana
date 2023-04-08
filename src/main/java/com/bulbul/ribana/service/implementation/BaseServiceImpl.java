@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@SuppressWarnings("unused")
 public abstract class BaseServiceImpl<T, ID> implements BaseService<T, ID> {
 
     private final BaseRepository<T, ID> baseRepository;

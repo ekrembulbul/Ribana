@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+@SuppressWarnings("unused")
 @Data
 @Entity
 public class Userr {
