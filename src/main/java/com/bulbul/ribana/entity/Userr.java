@@ -11,16 +11,18 @@ import lombok.Data;
 public class Userr {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERR_SEQUENCE_GENERATOR")
-    @SequenceGenerator(name = "USERR_SEQUENCE_GENERATOR", sequenceName = "USERR_SEQUENCE", initialValue = 101)
+    @SequenceGenerator(name = "USERR_SEQ_GENERATOR", sequenceName = "USERR_SEQ", initialValue = 101)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERR_SEQ_GENERATOR")
     private Long id;
 
     @Size(max = 64)
     @NotBlank
+    @Column(unique = true)
     private String username;
 
     @Size(max = 60)
     @NotBlank
+    @Column(unique = true)
     private String password;
 
     @Size(max = 64)

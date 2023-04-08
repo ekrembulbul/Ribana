@@ -1,4 +1,4 @@
-package com.bulbul.ribana.configuration.message;
+package com.bulbul.ribana.config.properties.messages;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:messages/error_messages.properties")
-public class ErrorMessageConfiguration {
+public class ErrorMessagesConfig {
 
     @Value("${result.length.and.field.length.must.be.equal}")
     public String resultLengthAndFieldLengthMustBeEqual;
