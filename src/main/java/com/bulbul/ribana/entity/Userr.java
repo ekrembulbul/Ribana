@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 @Data
 @Entity
@@ -36,5 +38,9 @@ public class Userr {
 
     @NotNull
     private Boolean active;
+
+    @OneToMany
+    @JoinColumn(name = "USERR_ID", referencedColumnName = "ID")
+    private List<Role> roleList;
 
 }
