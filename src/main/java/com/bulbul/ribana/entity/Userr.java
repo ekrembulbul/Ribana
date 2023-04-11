@@ -1,33 +1,46 @@
 package com.bulbul.ribana.entity;
 
-import com.bulbul.ribana.entity.custom.CustomUserr;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-@SqlResultSetMapping(
-        name = "CustomUserrMapping",
-        classes = @ConstructorResult(
-                targetClass = CustomUserr.class,
-                columns = {
-                        @ColumnResult(name = "name", type = String.class)}))
+import java.util.List;
+
+@SuppressWarnings("unused")
 @Data
 @Entity
 public class Userr {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "USERR_SEQ_GENERATOR", sequenceName = "USERR_SEQ", initialValue = 101)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERR_SEQ_GENERATOR")
     private Long id;
 
     @Size(max = 64)
     @NotBlank
-    private String userName;
+    @Column(unique = true)
+    private String username;
+
+    @Size(max = 60)
+    @NotBlank
+    @Column(unique = true)
+    private String password;
 
     @Size(max = 64)
+    @NotBlank
     private String name;
 
     @Size(max = 64)
+    @NotBlank
     private String surname;
+
+    @NotNull
+    private Boolean active;
+
+    @OneToMany
+    @JoinColumn(name = "USERR_ID", referencedColumnName = "ID")
+    private List<Role> roleList;
 
 }

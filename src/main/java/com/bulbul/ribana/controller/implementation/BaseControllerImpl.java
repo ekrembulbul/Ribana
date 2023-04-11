@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID> {
 
     private final BaseService<T, ID> baseService;
@@ -34,8 +35,8 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     }
 
     @Override
-    public ResponseEntity<List<T>> findAll(String[] propertyAndDirections) {
-        final Sort.Order[] orders = ControllerUtil.getOrders(propertyAndDirections);
+    public ResponseEntity<List<T>> findAll(String[] propertiesAndDirections) {
+        final Sort.Order[] orders = ControllerUtil.getOrders(propertiesAndDirections);
 
         if (Objects.isNull(orders))
             return ResponseEntity.badRequest().build();
@@ -59,8 +60,8 @@ public abstract class BaseControllerImpl<T, ID> implements BaseController<T, ID>
     }
 
     @Override
-    public ResponseEntity<List<T>> findAll(Integer page, Integer size, String[] propertyAndDirections) {
-        final Sort.Order[] orders = ControllerUtil.getOrders(propertyAndDirections);
+    public ResponseEntity<List<T>> findAll(Integer page, Integer size, String[] propertiesAndDirections) {
+        final Sort.Order[] orders = ControllerUtil.getOrders(propertiesAndDirections);
 
         if (Objects.isNull(orders))
             return ResponseEntity.badRequest().build();
